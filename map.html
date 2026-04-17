@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Peta Level - Belajar Ceria</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="min-h-screen map-body overflow-x-hidden text-slate-800">
+    <main class="relative min-h-screen px-4 py-8 sm:px-6">
+      <div class="mx-auto max-w-5xl">
+        <div class="map-header rounded-[2rem] border-[3px] border-slate-900/10 bg-white/90 p-6 shadow-[0_20px_50px_rgba(15,23,42,.08)]">
+          <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p class="inline-flex rounded-full bg-yellow-100 px-3 py-1 text-sm font-black text-slate-700">Peta Petualangan</p>
+              <h1 class="mt-3 text-3xl font-black text-slate-900 sm:text-5xl">Pilih Level Dulu</h1>
+              <p class="mt-2 max-w-2xl text-slate-600">Setiap level punya dunia sendiri. Main dari Hutan, lanjut ke Sekolah, terus gas ke Luar Angkasa.</p>
+            </div>
+            <a href="index.html" class="inline-flex items-center justify-center rounded-[1.2rem] bg-slate-900 px-5 py-3 font-black text-white shadow-lg transition active:scale-95">← Menu Awal</a>
+          </div>
+        </div>
+
+        <section class="relative mt-8 pb-10">
+          <div class="absolute left-1/2 top-8 hidden h-[78%] w-3 -translate-x-1/2 rounded-full bg-white/70 shadow-inner md:block"></div>
+
+          <div class="relative grid gap-6 md:gap-10">
+            <article class="level-card level-card-left forest-theme md:w-[58%]">
+              <div class="level-badge">Level 1</div>
+              <div class="mt-4 flex items-start justify-between gap-4">
+                <div>
+                  <h2 class="text-3xl font-black">Hutan Huruf</h2>
+                  <p class="mt-2 text-slate-700">Tema hijau, suara alam, kata pendek buat pemanasan.</p>
+                </div>
+                <div class="text-5xl">🌳</div>
+              </div>
+              <div class="mt-5 flex flex-wrap gap-2 text-sm font-bold text-slate-700">
+                <span class="chip">Kata pendek</span>
+                <span class="chip">Mudah</span>
+                <span class="chip">Nuansa hutan</span>
+              </div>
+              <a href="index.html?level=hutan" class="mt-6 inline-flex rounded-[1.2rem] bg-slate-900 px-5 py-3 font-black text-white shadow-lg active:scale-95">Main Level 1</a>
+            </article>
+
+            <article class="level-card level-card-right school-theme md:ml-auto md:w-[58%]">
+              <div class="level-badge">Level 2</div>
+              <div class="mt-4 flex items-start justify-between gap-4">
+                <div>
+                  <h2 class="text-3xl font-black">Sekolah Seru</h2>
+                  <p class="mt-2 text-slate-700">Tema kelas, benda sekolah, tantangan mulai naik dikit.</p>
+                </div>
+                <div class="text-5xl">🏫</div>
+              </div>
+              <div class="mt-5 flex flex-wrap gap-2 text-sm font-bold text-slate-700">
+                <span class="chip">Campur huruf & angka</span>
+                <span class="chip">Menengah</span>
+                <span class="chip">Nuansa kelas</span>
+              </div>
+              <button data-level="2" data-target="sekolah" class="level-start-btn mt-6 inline-flex rounded-[1.2rem] bg-slate-900 px-5 py-3 font-black text-white shadow-lg active:scale-95">Main Level 2</button>
+              <p class="level-lock-note mt-3 text-sm font-bold text-slate-500">Selesaikan Level 1 dulu</p>
+            </article>
+
+            <article class="level-card level-card-left space-theme md:w-[58%]">
+              <div class="level-badge">Level 3</div>
+              <div class="mt-4 flex items-start justify-between gap-4">
+                <div>
+                  <h2 class="text-3xl font-black">Luar Angkasa</h2>
+                  <p class="mt-2 text-slate-700">Tema galaksi, warna gelap, soal lebih ngebut dan agak tricky.</p>
+                </div>
+                <div class="text-5xl">🚀</div>
+              </div>
+              <div class="mt-5 flex flex-wrap gap-2 text-sm font-bold text-slate-700">
+                <span class="chip">Lebih susah</span>
+                <span class="chip">Visual bintang</span>
+                <span class="chip">Tema galaksi</span>
+              </div>
+              <button data-level="3" data-target="angkasa" class="level-start-btn mt-6 inline-flex rounded-[1.2rem] bg-slate-900 px-5 py-3 font-black text-white shadow-lg active:scale-95">Main Level 3</button>
+              <p class="level-lock-note mt-3 text-sm font-bold text-slate-500">Selesaikan Level 2 dulu</p>
+            </article>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <script>
+      const unlockedLevel = Number(localStorage.getItem("belajarCeriaUnlockedLevel") || 1);
+      document.querySelectorAll(".level-start-btn").forEach((button) => {
+        const neededLevel = Number(button.dataset.level);
+        const note = button.nextElementSibling;
+        if (neededLevel > unlockedLevel) {
+          button.disabled = true;
+          button.classList.add("locked-btn");
+          if (note) note.textContent = `Buka dulu level ${neededLevel - 1}`;
+        } else {
+          if (note) note.textContent = "Siap dimainkan";
+          button.addEventListener("click", () => {
+            window.location.href = `index.html?level=${button.dataset.target}`;
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

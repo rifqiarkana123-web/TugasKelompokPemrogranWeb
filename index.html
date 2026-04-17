@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Belajar Ceria</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              skysoft: "#dff4ff",
+              yellowsoft: "#fff6bf",
+              pinksoft: "#ffe0ee",
+              mintsoft: "#dff8e8",
+              bluefun: "#4fa7ff",
+              greenfun: "#37c98d",
+              pinkfun: "#ff73b6",
+              darkfun: "#243b53",
+            },
+            boxShadow: {
+              cute: "0 18px 40px rgba(79,167,255,.18)",
+            },
+            keyframes: {
+              floaty: {
+                "0%,100%": { transform: "translateY(0px)" },
+                "50%": { transform: "translateY(-10px)" },
+              },
+              pop: {
+                "0%": { transform: "scale(.96)", opacity: "0" },
+                "100%": { transform: "scale(1)", opacity: "1" },
+              },
+              pulseSoft: {
+                "0%,100%": { transform: "scale(1)" },
+                "50%": { transform: "scale(1.04)" },
+              },
+            },
+            animation: {
+              floaty: "floaty 3s ease-in-out infinite",
+              pop: "pop .35s ease-out",
+              pulseSoft: "pulseSoft 1.6s ease-in-out infinite",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body
+    class="min-h-screen bg-gradient-to-br from-skysoft via-white to-pinksoft text-slate-800 overflow-x-hidden"
+  >
+    <canvas
+      id="confettiCanvas"
+      class="fixed inset-0 pointer-events-none z-40"
+    ></canvas>
+
+    <div class="fixed inset-0 pointer-events-none opacity-70 z-0 decorative-floaters">
+      <div class="absolute top-4 left-4 text-3xl animate-floaty floater-1">⭐</div>
+      <div
+        class="absolute top-8 right-6 text-4xl animate-floaty floater-2"
+        style="animation-delay: 0.5s"
+      >
+        🎈
+      </div>
+      <div
+        class="absolute bottom-24 left-5 text-4xl animate-floaty floater-3"
+        style="animation-delay: 1s"
+      >
+        🍎
+      </div>
+      <div
+        class="absolute bottom-20 right-5 text-3xl animate-floaty floater-4"
+        style="animation-delay: 1.5s"
+      >
+        🧩
+      </div>
+    </div>
+
+    <main class="relative z-10">
+      <section
+        id="startScreen"
+        class="min-h-screen flex items-center justify-center px-4 py-8"
+      >
+        <div
+          class="w-full max-w-md rounded-[2rem] border-[3px] border-slate-900/10 bg-white/90 shadow-cute p-6 md:p-8 text-center animate-pop start-card"
+        >
+          <div class="text-6xl animate-floaty">🎮</div>
+          <h1 class="mt-4 text-4xl md:text-5xl font-black text-darkfun">
+            Belajar Ceria
+          </h1>
+          <p class="mt-3 text-base md:text-lg text-slate-600">
+            Main, dengar, dan jawab.
+          </p>
+
+          <div class="mt-6 grid grid-cols-3 gap-3 text-sm font-bold">
+            <div class="rounded-[1.4rem] bg-yellowsoft p-3 border border-slate-900/5">
+              🔤
+              <div class="mt-1">Huruf</div>
+            </div>
+            <div class="rounded-[1.4rem] bg-mintsoft p-3 border border-slate-900/5">
+              🔢
+              <div class="mt-1">Angka</div>
+            </div>
+            <div class="rounded-[1.4rem] bg-pinksoft p-3 border border-slate-900/5">
+              🧩
+              <div class="mt-1">Game</div>
+            </div>
+          </div>
+
+          <div class="mt-7 grid gap-3">
+            <button
+              id="startBtn"
+              class="play-btn rounded-[1.3rem] bg-bluefun text-white font-black text-lg py-4 px-6 shadow-lg active:scale-95 transition"
+            >
+              Mulai
+            </button>
+            <button
+              id="previewVoiceBtn"
+              class="rounded-[1.3rem] bg-white border-2 border-slate-200 font-bold py-3 px-5 active:scale-95 transition"
+            >
+              Tes Suara
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="loadingScreen"
+        class="hidden min-h-screen flex items-center justify-center px-4"
+      >
+        <div
+          class="w-full max-w-md bg-white/88 rounded-[2rem] border-[3px] border-slate-900/10 shadow-cute p-6 text-center animate-pop"
+        >
+          <div class="text-6xl animate-pulseSoft">✨</div>
+          <h2 class="mt-4 text-2xl font-black text-darkfun">Bersiap ya...</h2>
+          <p id="loadingText" class="mt-2 text-slate-600">
+            Permainan akan dimulai.
+          </p>
+          <div class="mt-6 h-4 rounded-full bg-slate-100 overflow-hidden border border-slate-900/5">
+            <div
+              id="loadingBar"
+              class="h-full w-0 rounded-full bg-gradient-to-r from-bluefun via-greenfun to-pinkfun transition-all duration-500"
+            ></div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="appScreen"
+        class="hidden min-h-screen px-3 py-4 sm:px-4 sm:py-5 md:px-6 md:py-6"
+      >
+        <div
+          class="max-w-6xl mx-auto bg-white/88 rounded-[2rem] border-[3px] border-slate-900/10 shadow-cute p-3 sm:p-4 md:p-5 game-shell"
+        >
+          <div
+            class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+          >
+            <div>
+              <p id="levelBadge" class="hidden mb-2 inline-flex rounded-full bg-white px-3 py-1 text-sm font-black shadow-sm border border-slate-200"></p>
+              <h2 id="appTitle" class="text-2xl sm:text-3xl font-black text-darkfun">
+                Belajar Ceria
+              </h2>
+              <p id="appSubtitle" class="text-sm text-slate-500">Pilih menu lalu bermain.</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button class="tab-btn active-tab" data-tab="gameTab">
+                🎮 Game
+              </button>
+              <button class="tab-btn" data-tab="hurufTab">🔤 Huruf</button>
+              <button class="tab-btn" data-tab="angkaTab">🔢 Angka</button>
+              <button
+                id="restartAppBtn"
+                class="rounded-[1.1rem] px-4 py-3 bg-slate-100 font-bold active:scale-95 transition"
+              >
+                Peta
+              </button>
+            </div>
+          </div>
+
+          <div class="mt-4 grid xl:grid-cols-[1.55fr,1fr] gap-4">
+            <div>
+              <div id="gameTab" class="tab-panel">
+                <div
+                  id="gamePanel"
+                  class="rounded-[2rem] bg-gradient-to-br from-skysoft to-pinksoft p-4 sm:p-5 border border-white"
+                >
+                  <div
+                    class="flex flex-wrap items-center justify-between gap-3"
+                  >
+                    <div>
+                      <p class="text-sm font-bold text-slate-500">
+                        Ronde <span id="roundNow">1</span>/<span id="roundTotal"
+                          >12</span
+                        >
+                      </p>
+                      <h3 class="text-2xl sm:text-3xl font-black text-darkfun">
+                        Tebak Gambar
+                      </h3>
+                    </div>
+                    <div
+                      class="rounded-full bg-white px-4 py-3 text-lg font-black shadow border border-slate-900/5"
+                    >
+                      Skor <span id="scoreValue">0</span>
+                    </div>
+                  </div>
+
+                  <div
+                    class="mt-4 rounded-[1.6rem] bg-white p-5 text-center min-h-[220px] flex flex-col justify-center items-center shadow-sm border border-slate-900/5"
+                  >
+                    <div
+                      id="questionEmoji"
+                      class="text-7xl sm:text-8xl md:text-9xl animate-floaty"
+                    >
+                      🍎
+                    </div>
+                    <p
+                      id="questionHint"
+                      class="mt-4 text-base sm:text-lg font-semibold text-slate-600"
+                    >
+                      Pilih jawaban yang benar
+                    </p>
+                  </div>
+
+                  <div
+                    id="choicesContainer"
+                    class="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-3"
+                  ></div>
+
+                  <div class="mt-4 flex flex-wrap gap-3">
+                    <button
+                      id="repeatQuestionBtn"
+                      class="rounded-[1.2rem] bg-white px-5 py-3 font-black shadow-sm border border-slate-200 active:scale-95"
+                    >
+                      Ulangi
+                    </button>
+                    <button
+                      id="nextQuestionBtn"
+                      class="hidden rounded-[1.2rem] bg-greenfun text-white px-5 py-3 font-black shadow-sm active:scale-95"
+                    >
+                      Lanjut
+                    </button>
+                  </div>
+
+                  <div class="mt-4 rounded-[1.4rem] bg-white/80 p-4 border border-white">
+                    <p id="gameFeedback" class="font-bold text-slate-700">Yuk pilih jawaban yang benar ✨</p>
+                    <div id="starsRow" class="mt-3 flex flex-wrap gap-1 text-2xl"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="hurufTab" class="tab-panel hidden">
+                <div class="rounded-[2rem] bg-gradient-to-br from-yellowsoft to-pinksoft p-4 sm:p-5 border border-white">
+                  <div class="flex items-center justify-between gap-3 flex-wrap">
+                    <div>
+                      <h3 class="text-2xl sm:text-3xl font-black text-darkfun">Belajar Huruf</h3>
+                      <p class="text-sm text-slate-600">Klik kartu huruf untuk mendengar contohnya.</p>
+                    </div>
+                    <div class="flex gap-2 flex-wrap">
+                      <button id="alphabetVoiceBtn" class="rounded-[1.2rem] bg-white px-5 py-3 font-black shadow-sm border border-slate-200 active:scale-95">Dengar</button>
+                      <button id="speakAlphabetBtn" class="rounded-[1.2rem] bg-white px-5 py-3 font-black shadow-sm border border-slate-200 active:scale-95">A-Z</button>
+                    </div>
+                  </div>
+                  <div id="alphabetGrid" class="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3"></div>
+                </div>
+              </div>
+
+              <div id="angkaTab" class="tab-panel hidden">
+                <div class="rounded-[2rem] bg-gradient-to-br from-mintsoft to-skysoft p-4 sm:p-5 border border-white">
+                  <div class="flex items-center justify-between gap-3 flex-wrap">
+                    <div>
+                      <h3 class="text-2xl sm:text-3xl font-black text-darkfun">Belajar Angka</h3>
+                      <p class="text-sm text-slate-600">Klik kartu angka untuk melihat jumlah benda.</p>
+                    </div>
+                    <button id="numberVoiceBtn" class="rounded-[1.2rem] bg-white px-5 py-3 font-black shadow-sm border border-slate-200 active:scale-95">Dengar</button>
+                  </div>
+                  <div id="numberGrid" class="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3"></div>
+                </div>
+              </div>
+            </div>
+
+            <aside class="grid gap-4">
+              <div id="cluePanel" class="rounded-[2rem] bg-white p-5 shadow-sm border border-slate-200">
+                <p class="text-sm font-black text-slate-400">Petunjuk</p>
+                <h4 id="clueTitle" class="mt-2 text-2xl font-black text-darkfun"></h4>
+                <p id="clueText" class="mt-2 text-slate-600"></p>
+                <button id="speakClueBtn" class="mt-4 w-full rounded-[1.2rem] bg-slate-100 py-3 font-black active:scale-95">Dengar Petunjuk</button>
+              </div>
+
+              <div id="alphaDetailPanel" class="hidden rounded-[2rem] bg-white p-5 shadow-sm border border-slate-200">
+                <p class="text-sm font-black text-slate-400">Huruf Pilihan</p>
+                <h4 id="alphabetPanelTitle" class="mt-2 text-2xl font-black text-darkfun"></h4>
+                <p id="alphabetPanelDesc" class="mt-2 text-slate-600"></p>
+                <button id="assistantVoiceBtn" class="mt-4 w-full rounded-[1.2rem] bg-slate-100 py-3 font-black active:scale-95">Semangat</button>
+              </div>
+
+              <div id="numberDetailPanel" class="hidden rounded-[2rem] bg-white p-5 shadow-sm border border-slate-200">
+                <p class="text-sm font-black text-slate-400">Angka Pilihan</p>
+                <h4 id="numberPanelTitle" class="mt-2 text-2xl font-black text-darkfun"></h4>
+                <div id="numberObjects" class="mt-3 text-4xl leading-relaxed"></div>
+                <p id="numberPanelDesc" class="mt-2 text-slate-600"></p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

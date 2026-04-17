@@ -1,0 +1,332 @@
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  touch-action: manipulation;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(255,255,255,.9) 0 40px, transparent 41px),
+    radial-gradient(circle at 82% 12%, rgba(255,255,255,.6) 0 28px, transparent 29px),
+    radial-gradient(circle at 20% 84%, rgba(255,255,255,.5) 0 34px, transparent 35px),
+    linear-gradient(135deg, rgba(255,255,255,.16), transparent 40%);
+  opacity: .85;
+  z-index: 0;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #4fa7ff;
+  outline-offset: 2px;
+}
+
+.start-card,
+.game-shell,
+.level-card,
+.map-header {
+  position: relative;
+  overflow: hidden;
+}
+
+.start-card::after,
+.game-shell::after,
+.level-card::after,
+.map-header::after {
+  content: "";
+  position: absolute;
+  inset: auto -40px -60px auto;
+  width: 160px;
+  height: 160px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.35);
+}
+
+.play-btn {
+  position: relative;
+  box-shadow: 0 14px 28px rgba(79, 167, 255, .28);
+}
+
+.tab-btn,
+.choice-btn,
+.alpha-card,
+.number-card {
+  border-radius: 1.25rem;
+  transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease, border-color .2s ease;
+}
+
+.tab-btn {
+  background: #f8fafc;
+  padding: .8rem 1rem;
+  font-weight: 800;
+  border: 2px solid rgba(148, 163, 184, .18);
+}
+
+.active-tab {
+  background: #4fa7ff;
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(79, 167, 255, .25);
+}
+
+.choice-btn,
+.alpha-card,
+.number-card {
+  background: #fff;
+  border: 2px solid rgba(255,255,255,.9);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, .06);
+  padding: 1rem;
+}
+
+.choice-btn:hover,
+.alpha-card:hover,
+.number-card:hover,
+.tab-btn:hover,
+.level-card:hover,
+.play-btn:hover {
+  transform: translateY(-3px);
+}
+
+.choice-btn:active,
+.alpha-card:active,
+.number-card:active,
+.tab-btn:active,
+.level-card:active {
+  transform: scale(.97);
+}
+
+.choice-btn.correct,
+.alpha-card.active,
+.number-card.active {
+  background: #dcfce7;
+  border-color: #22c55e;
+  transform: translateY(-2px);
+}
+
+.choice-btn.wrong {
+  background: #ffe4e6;
+  border-color: #f43f5e;
+  animation: shake .4s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+.theme-hutan {
+  background: linear-gradient(160deg, #dff8e8 0%, #f8ffe9 45%, #fff5d8 100%);
+}
+
+.theme-hutan .decorative-floaters .floater-1,
+.theme-hutan .decorative-floaters .floater-2,
+.theme-hutan .decorative-floaters .floater-3,
+.theme-hutan .decorative-floaters .floater-4 {
+  filter: drop-shadow(0 8px 20px rgba(34, 197, 94, .18));
+}
+
+.theme-sekolah {
+  background: linear-gradient(160deg, #fff6bf 0%, #fff0d5 50%, #ffe0ee 100%);
+}
+
+.theme-angkasa {
+  background:
+    radial-gradient(circle at 20% 18%, rgba(59,130,246,.22) 0 120px, transparent 121px),
+    radial-gradient(circle at 78% 14%, rgba(168,85,247,.18) 0 110px, transparent 111px),
+    radial-gradient(circle at 50% 80%, rgba(34,211,238,.14) 0 160px, transparent 161px),
+    linear-gradient(165deg, #081120 0%, #111c3a 42%, #1d2e5b 100%);
+  color: #eaf2ff;
+}
+
+.theme-angkasa #appSubtitle,
+.theme-angkasa #questionHint,
+.theme-angkasa #clueText,
+.theme-angkasa #alphabetPanelDesc,
+.theme-angkasa #numberPanelDesc,
+.theme-angkasa #gameFeedback,
+.theme-angkasa .text-slate-500,
+.theme-angkasa .text-slate-600 {
+  color: #d3ddf8 !important;
+}
+
+.theme-angkasa .game-shell,
+.theme-angkasa #cluePanel,
+.theme-angkasa #alphaDetailPanel,
+.theme-angkasa #numberDetailPanel,
+.theme-angkasa .alpha-card,
+.theme-angkasa .number-card,
+.theme-angkasa .choice-btn,
+.theme-angkasa .tab-btn,
+.theme-angkasa #levelBadge,
+.theme-angkasa #gamePanel > div,
+.theme-angkasa #gamePanel .bg-white,
+.theme-angkasa .bg-white {
+  background-color: rgba(10, 18, 38, .76) !important;
+  color: #edf4ff !important;
+  border-color: rgba(148, 163, 184, .2) !important;
+  box-shadow: 0 18px 38px rgba(3, 8, 20, .28) !important;
+}
+
+.theme-angkasa .active-tab {
+  background: linear-gradient(135deg, #38bdf8, #8b5cf6) !important;
+}
+
+.panel-hutan {
+  background: linear-gradient(135deg, #dcfce7, #fef3c7) !important;
+}
+
+.panel-sekolah {
+  background: linear-gradient(135deg, #fff7c2, #ffd8ec) !important;
+}
+
+.panel-angkasa {
+  background: linear-gradient(145deg, rgba(25,45,98,.92), rgba(11,18,39,.96)) !important;
+  border-color: rgba(191,219,254,.16) !important;
+}
+
+.map-body {
+  background: linear-gradient(180deg, #dff4ff 0%, #fef3c7 40%, #ffe0ee 100%);
+}
+
+.level-card {
+  border: 3px solid rgba(15, 23, 42, .08);
+  border-radius: 2rem;
+  background: rgba(255,255,255,.9);
+  padding: 1.75rem;
+  box-shadow: 0 22px 42px rgba(15, 23, 42, .08);
+}
+
+.level-card-left {
+  transform: rotate(-1deg);
+}
+
+.level-card-right {
+  transform: rotate(1deg);
+}
+
+.level-badge,
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  border-radius: 999px;
+  font-weight: 800;
+}
+
+.level-badge {
+  background: rgba(255,255,255,.86);
+  padding: .5rem .85rem;
+  box-shadow: 0 8px 20px rgba(15,23,42,.06);
+}
+
+.chip {
+  background: rgba(255,255,255,.64);
+  padding: .45rem .8rem;
+}
+
+.forest-theme {
+  background: linear-gradient(135deg, #bbf7d0, #fef3c7);
+}
+
+.school-theme {
+  background: linear-gradient(135deg, #fde68a, #fbcfe8);
+}
+
+.space-theme {
+  background: linear-gradient(135deg, #c7d2fe, #93c5fd, #ddd6fe);
+}
+
+.locked-btn {
+  opacity: .45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .level-card-left,
+  .level-card-right {
+    transform: none;
+  }
+}
+
+.theme-angkasa::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 14% 22%, rgba(255,255,255,.95) 0 1.6px, transparent 1.8px),
+    radial-gradient(circle at 34% 68%, rgba(255,255,255,.82) 0 1.2px, transparent 1.4px),
+    radial-gradient(circle at 62% 28%, rgba(255,255,255,.78) 0 1.8px, transparent 2px),
+    radial-gradient(circle at 84% 44%, rgba(255,255,255,.72) 0 1.5px, transparent 1.7px),
+    radial-gradient(circle at 74% 78%, rgba(255,255,255,.9) 0 1.7px, transparent 1.9px);
+  z-index: 0;
+}
+
+
+.theme-angkasa .game-shell {
+  background: linear-gradient(180deg, rgba(18, 28, 56, .92), rgba(9, 15, 31, .94)) !important;
+}
+
+.theme-angkasa #appTitle,
+.theme-angkasa #levelBadge,
+.theme-angkasa #clueTitle,
+.theme-angkasa #numberPanelTitle,
+.theme-angkasa #alphabetPanelTitle,
+.theme-angkasa h3,
+.theme-angkasa .text-darkfun {
+  color: #f8fbff !important;
+}
+
+.theme-angkasa #gamePanel,
+.theme-angkasa #cluePanel,
+.theme-angkasa #alphaDetailPanel,
+.theme-angkasa #numberDetailPanel {
+  background: linear-gradient(180deg, rgba(16, 28, 60, .96), rgba(8, 14, 30, .98)) !important;
+  border-color: rgba(96, 165, 250, .16) !important;
+}
+
+.theme-angkasa #questionEmoji {
+  filter: drop-shadow(0 0 18px rgba(96,165,250,.28));
+}
+
+.theme-angkasa #choicesContainer .choice-btn {
+  background: rgba(5, 16, 42, .96) !important;
+}
+
+.theme-angkasa .choice-btn.correct,
+.theme-angkasa .alpha-card.active,
+.theme-angkasa .number-card.active {
+  background: linear-gradient(135deg, rgba(34,197,94,.28), rgba(96,165,250,.26)) !important;
+  border-color: rgba(134,239,172,.7) !important;
+}
+
+.theme-angkasa .choice-btn.wrong {
+  background: rgba(127,29,29,.55) !important;
+  border-color: rgba(252,165,165,.6) !important;
+}
+
+.theme-angkasa .tab-btn,
+.theme-angkasa #restartAppBtn {
+  background: rgba(9, 20, 46, .92) !important;
+  color: #eef4ff !important;
+}
+
+.theme-angkasa #restartAppBtn {
+  border: 1px solid rgba(148,163,184,.2);
+}
